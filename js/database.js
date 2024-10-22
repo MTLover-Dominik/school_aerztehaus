@@ -30,6 +30,11 @@ class Database {
         });
     }
 
+    async query(sql, params) {
+        const [results] = await this.connection.execute(sql, params);
+        return results;
+    }
+    
     // Methode zum Schließen der Verbindung
     closeConnection() {
         this.connection.end((err) => {

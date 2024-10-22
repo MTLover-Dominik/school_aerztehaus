@@ -24,6 +24,27 @@ app.get('/api/check-database', async (req, res) => {
     }
 });
 
+app.get('/api/get-customer', async (req, res) => {
+    try {
+        // Hier wird die Datenbankabfrage ausgeführt
+        await db.checkConnection();
+        const [results] = await db.query('Select * From kunde'); // Verwende die Methode deiner Datenbankverbindung
+
+        // Überprüfen, ob Ergebnisse vorhanden sind
+        if (results.length > 0) {
+            res.status(200).json(results); // Sende die Ergebnisse als JSON zurück
+        } else {
+            res.status(404).json({ message: 'Keine Kunden gefunden' }); // Keine Kunden gefunden
+        }
+    } catch (error) {
+        // Bei einem Fehler wird der Fehlerstatus 500 gesendet
+        res.status(500).json({ error: 'Interner Serverfehler', details: error.message });
+        console.log('Fehler:', error); // Fehler im Server-Log ausgeben
+    } finally {
+        db.closeConnection();
+    }
+});
+
 // Stelle statische Dateien im Ordner 'public' bereit
 app.use(express.static('public'));
 

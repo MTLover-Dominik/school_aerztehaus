@@ -12,10 +12,10 @@ button.addEventListener("click", ()=> {
 document.getElementById('checkDatabaseBtn').addEventListener('click', async function() {
     try {
         // Sende eine GET-Anfrage an die API
-        const response = await fetch('/api/check-database');
+        const response = await fetch('/api/get-customer');
 
         if (response.ok) { // response.ok prüft, ob der Statuscode zwischen 200 und 299 liegt
-            const message = await response.text(); // oder .json() falls die API JSON sendet
+            const message = await response.json(); // oder .json() falls die API JSON sendet
             console.log('Erfolg:', message);
         } else {
             console.error('Fehler:', response.status, response.statusText);
