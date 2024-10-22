@@ -6,3 +6,5 @@ const message = "Willkommen zu meinem TypeScript-Projekt!";
 button.addEventListener("click", ()=> {
     textArea.innerHTML = message;
 })
+
+
