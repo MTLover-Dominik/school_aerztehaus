@@ -3,7 +3,7 @@
     text-align: center;
     margin-top: 50px;
 }
-ul {
+.allDataList {
     list-style-type: none;
     display: flex;
     justify-content: space-around;
