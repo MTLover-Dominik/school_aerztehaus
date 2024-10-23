@@ -1,6 +1,7 @@
 ﻿button = document.getElementById("doSomething");
 textArea = document.getElementById("doSomethingText");
-result = document.getElementById("result");
+customerList = document.getElementById("customerList");
+testCustomer = document.getElementById("testCustomer");
 
 const message = "Willkommen zu meinem TypeScript-Projekt!";
 
@@ -16,12 +17,13 @@ document.getElementById('checkDatabaseBtn').addEventListener('click', async func
         const response = await fetch('/api/get-customer');
 
         if (response.ok) { // response.ok prüft, ob der Statuscode zwischen 200 und 299 liegt
-            console.
-            result.innerHTML = await response.json(); // oder .json() falls die API JSON sendet
+            const customers = await response.json(); // oder .json() falls die API JSON sendet
+            console.log('Erfolg:', customers);
+            displayCustomers(customers);
         } else {
             const status = await response.status;
             const text = await response.statusText;
-            result.innerHTML = status + " " + text;
+            customerList.innerHTML = status + " " + text;
             console.error('Fehler:', response.status, response.statusText);
         }
     } catch (error) {
@@ -29,3 +31,16 @@ document.getElementById('checkDatabaseBtn').addEventListener('click', async func
         document.getElementById('result').textContent = 'Fehler bei der Verbindung zur API.';
     }
 });
+
+function displayCustomers(customers) {
+    let i = 0;
+    do {
+        const listItem = document.createElement('li');
+        listItem.innerHTML = `<div><b>Kunde ${customers[i].kunnr}</b><br>
+            ${customers[i].vorname} ${customers[i].name}<br>
+            ${customers[i].strasse}<br>
+            ${customers[i].plz} ${customers[i].ort}</div>`;
+        customerList.appendChild(listItem);
+        i++;
+    } while (customers.length > i);
+}
