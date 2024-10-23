@@ -1,9 +1,8 @@
 ﻿import check_connection from './apiTasks/task_checkDatabase.js';
 import get_customer from './apiTasks/get_customer.js';
-
-const express = require('express');
-const fs = require('fs');
-const Database = require('./database.js');
+import express from 'express';
+import fs from 'fs';
+import Database from './database.js';
 
 const app = express();
 const port = 3000;
@@ -20,7 +19,7 @@ app.get('/api/check-database', async (req, res) => {
 });
 
 app.get('/api/get-customer', async (req, res) => {
-    get_customer();
+    get_customer(db, req, res);
 });
 
 // Stelle statische Dateien im Ordner 'public' bereit

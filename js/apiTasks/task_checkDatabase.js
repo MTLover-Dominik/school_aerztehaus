@@ -1,6 +1,4 @@
-﻿
-
-async function check_connection(db, req, res) {
+﻿async function check_connection(db, req, res) {
     try {
         const message = await db.checkConnection();
         res.status(200).send(message);

@@ -1,4 +1,4 @@
-﻿const mysql = require('mysql2'); // mysql2-Paket verwenden
+﻿import mysql from "mysql2";
 
 class Database {
     constructor(credentials) {
@@ -40,4 +40,4 @@ class Database {
     }
 }
 
-module.exports = Database;
+export default Database;

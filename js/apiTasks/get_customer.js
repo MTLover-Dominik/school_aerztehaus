@@ -1,6 +1,6 @@
-﻿const mysql = require("mysql2/promise");
+﻿import mysql from 'mysql2/promise';
 
-async function get_customer() {
+async function get_customer(db, req, res) {
     let connection;
     try {
         // Verbindung zur Datenbank herstellen
