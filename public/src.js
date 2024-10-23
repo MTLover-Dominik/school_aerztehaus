@@ -1,5 +1,6 @@
 ﻿button = document.getElementById("doSomething");
 textArea = document.getElementById("doSomethingText");
+result = document.getElementById("result");
 
 const message = "Willkommen zu meinem TypeScript-Projekt!";
 
@@ -15,9 +16,12 @@ document.getElementById('checkDatabaseBtn').addEventListener('click', async func
         const response = await fetch('/api/get-customer');
 
         if (response.ok) { // response.ok prüft, ob der Statuscode zwischen 200 und 299 liegt
-            const message = await response.json(); // oder .json() falls die API JSON sendet
-            console.log('Erfolg:', message);
+            console.
+            result.innerHTML = await response.json(); // oder .json() falls die API JSON sendet
         } else {
+            const status = await response.status;
+            const text = await response.statusText;
+            result.innerHTML = status + " " + text;
             console.error('Fehler:', response.status, response.statusText);
         }
     } catch (error) {

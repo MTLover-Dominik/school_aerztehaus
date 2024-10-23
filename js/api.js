@@ -1,4 +1,5 @@
 ﻿const express = require('express');
+const mysql = require('mysql2/promise'); // Versprechen-basierte MySQL-Verbindung
 const fs = require('fs');
 const Database = require('./database.js');  // Verweis auf die Datenbankklasse
 
@@ -25,23 +26,24 @@ app.get('/api/check-database', async (req, res) => {
 });
 
 app.get('/api/get-customer', async (req, res) => {
+    let connection;
     try {
-        // Hier wird die Datenbankabfrage ausgeführt
-        await db.checkConnection();
-        const [results] = await db.query('Select * From kunde'); // Verwende die Methode deiner Datenbankverbindung
+        // Verbindung zur Datenbank herstellen
+        connection = await mysql.createConnection(db);
 
-        // Überprüfen, ob Ergebnisse vorhanden sind
-        if (results.length > 0) {
-            res.status(200).json(results); // Sende die Ergebnisse als JSON zurück
-        } else {
-            res.status(404).json({ message: 'Keine Kunden gefunden' }); // Keine Kunden gefunden
-        }
+        // Datenbankabfrage: SELECT * FROM customer
+        const [results] = await connection.query('SELECT * FROM kunde'); // Tabelle "kunde" anpassen
+
+        // Kundendaten als JSON zurückgeben
+        res.status(200).json(results);
     } catch (error) {
-        // Bei einem Fehler wird der Fehlerstatus 500 gesendet
-        res.status(500).json({ error: 'Interner Serverfehler', details: error.message });
-        console.log('Fehler:', error); // Fehler im Server-Log ausgeben
+        console.error('Datenbankfehler:', error);
+        res.status(500).send('Fehler bei der Verbindung zur Datenbank');
     } finally {
-        db.closeConnection();
+        if (connection) {
+            // Verbindung schließen
+            await connection.end();
+        }
     }
 });
 
