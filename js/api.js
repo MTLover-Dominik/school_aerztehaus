@@ -27,6 +27,12 @@ app.get('/api/get-articles', async (req, res) => {
     get_articles(db, req, res);
 })
 
+//TODO create endpoint for getting "username" and "password" for login process
+/*app.get('/api/get-loginData', async (req, res) => {
+    
+});
+*/
+
 // Stelle statische Dateien im Ordner 'public' bereit
 app.use(express.static('public'));
 
