@@ -1,0 +1,10 @@
+﻿label {
+    display: inline-block;
+    width: 130px;
+}
+input[type=text], input[type=password] {
+    width: 230px;
+}
+.content>form>div {
+    margin: 10px;
+}
